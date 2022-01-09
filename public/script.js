@@ -1,28 +1,21 @@
 $(document).ready(function(){
-$('#download').hide();
+	$('#resutl').hide();
 if(location.href.indexOf('?code=')>-1)
 {
 	var code=location.href.split('?code=')[1];
 	$('#code-generate').val(code);
 	$('#generateBtn').click();
 }
-	});
-	$('#generateBtn').click(function(){
-		$('#result').html('');
-		var codeHtml= getGenerateQRcode($('#code-generate').val(), $('#code-width').val(), $('#code-hight').val(), 1,$('#code-border').prop('checked'));
-		$('#result').html(codeHtml);
-		$('#download').show();
-		});
-	
-		$('#download').click(
+});
+
+$('#generateBtn').click(function(){
+		let code=$('#code-generate').val();
+		let width=$('#code-width').val();
+		if(!width)
+			width=200;
+		$('#resutl').attr('width',width);
+		let imageSrc= `/img/${code}/${width}`;
+		$('#resutl').attr('src',imageSrc);
 		
-		function(){
-		var fileName=prompt("Enter file name : ","QR-Code");
-		var a = document.createElement('a');
-	a.href = $('#result div img').attr("src");
-	a.download = fileName+".png";
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
-		}
-		);
+		$('#resutl').show();
+});
